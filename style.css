@@ -1,0 +1,326 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-color: #f7f9fa;
+  --card-bg: #ffffff;
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  --ground-color: #535353;
+  --accent-color: #10b981;
+  --accent-hover: #059669;
+  --border-color: #e2e8f0;
+  --danger-color: #ef4444;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, monospace;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.game-wrapper {
+  width: 100%;
+  max-width: 840px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Header & Scoreboard */
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px;
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dino-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+}
+
+.scoreboard {
+  display: flex;
+  gap: 16px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.score-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.score-item .label {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.hi-score {
+  color: #64748b;
+}
+
+.current-score {
+  color: #1e293b;
+}
+
+/* 100-point celebration */
+.score-flash {
+  animation: flashAnim 0.8s ease-in-out;
+}
+
+@keyframes flashAnim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(1.15); color: var(--accent-color); }
+}
+
+/* Game Canvas & Container */
+.game-container {
+  position: relative;
+  width: 100%;
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 800 / 260;
+  background: #ffffff;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Overlay Card (Start & Game Over) */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 10;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.overlay-card {
+  text-align: center;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: popIn 0.25s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.overlay-card h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.5px;
+}
+
+.overlay-card.game-over h2 {
+  color: var(--danger-color);
+}
+
+.overlay-card p {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.stats-row {
+  display: flex;
+  gap: 16px;
+  margin: 6px 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.stats-row.hidden {
+  display: none;
+}
+
+.stat-box {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.action-btn {
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+}
+
+.action-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(1px);
+}
+
+/* Controls Hint */
+.controls-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.controls-hint kbd {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 #cbd5e1;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 7px;
+  color: var(--text-main);
+}
+
+.controls-hint .divider {
+  color: #cbd5e1;
+}
+
+/* Mobile Controls button */
+.mobile-controls {
+  display: none;
+  width: 100%;
+}
+
+.mobile-btn {
+  width: 100%;
+  padding: 18px;
+  font-size: 18px;
+  font-weight: 800;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  letter-spacing: 1px;
+}
+
+.mobile-btn:active {
+  background: #2563eb;
+  transform: scale(0.98);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+  .game-wrapper {
+    gap: 12px;
+  }
+
+  .game-header {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+
+  .dino-icon {
+    font-size: 22px;
+  }
+
+  .scoreboard {
+    font-size: 15px;
+    gap: 10px;
+  }
+
+  .score-item .label {
+    font-size: 11px;
+  }
+
+  .key-hint, .divider {
+    display: none;
+  }
+
+  .mobile-controls {
+    display: block;
+  }
+}

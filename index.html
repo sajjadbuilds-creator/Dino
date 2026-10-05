@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Dino Runner Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-wrapper">
+    <header class="game-header">
+      <div class="title-group">
+        <span class="dino-icon">🦖</span>
+        <h1>Dino Runner</h1>
+      </div>
+      <div class="scoreboard">
+        <span class="score-item hi-score">
+          <span class="label">HI</span>
+          <span id="high-score-display">00000</span>
+        </span>
+        <span class="score-item current-score">
+          <span class="label">SCORE</span>
+          <span id="current-score-display">00000</span>
+        </span>
+      </div>
+    </header>
+
+    <div class="game-container" id="game-container">
+      <canvas id="game-canvas" width="800" height="260"></canvas>
+
+      <!-- Overlay for Start / Game Over -->
+      <div class="overlay" id="game-overlay">
+        <div class="overlay-card">
+          <h2 id="overlay-title">Ready to Run?</h2>
+          <p id="overlay-subtitle">Press <strong>Space</strong> or tap anywhere to start.</p>
+          <div id="game-over-stats" class="stats-row hidden">
+            <div class="stat-box">
+              <span class="stat-label">Final Score</span>
+              <span class="stat-value" id="final-score">00000</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Best Score</span>
+              <span class="stat-value" id="final-best">00000</span>
+            </div>
+          </div>
+          <button id="action-btn" class="action-btn">Start Game</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls hint bar -->
+    <div class="controls-hint">
+      <span class="key-hint"><kbd>Space</kbd> or <kbd>↑</kbd> to Jump</span>
+      <span class="divider">•</span>
+      <span class="touch-hint">Tap / Click anywhere to Jump</span>
+    </div>
+
+    <!-- Quick action controls for mobile touch -->
+    <div class="mobile-controls">
+      <button id="mobile-jump-btn" class="mobile-btn">TAP TO JUMP</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
